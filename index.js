@@ -1,5 +1,6 @@
 var Customer = require('./Customer.js');
 
+const cTable = require('console.table');
 const inquirer = require('inquirer');
 const connection = require('./connection.js');
 
