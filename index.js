@@ -3,6 +3,8 @@ var Customer = require('./Customer.js');
 const inquirer = require('inquirer');
 const connection = require('./connection.js');
 
+var customer = new Customer();
+
 connection.connect(function(err) {
   if (err) throw err;
 
@@ -20,7 +22,6 @@ connection.connect(function(err) {
 });
 
 customerSearch = function() {
-  var customer = new Customer();
 
   console.log('\n')
 
@@ -35,8 +36,6 @@ customerSearch = function() {
   }]).then(function(answer) {
     var itemBought = answer.buy;
     var itemQuantity = answer.amount;
-
-    console.log(customer.cart);
 
     customer.addToCart(itemBought, itemQuantity);
 

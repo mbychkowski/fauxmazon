@@ -10,11 +10,6 @@ function Item(id, name, stock, quantity, price) {
   this.isAvailable = true;
 }
 
-// Item.prototype.totalItemCost = function() {
-//   var totalItemCost = this.quantity * this.price;
-//   return totalItemCost;
-// }
-
 Item.prototype.updateDatabase = function() {
   this.stock -= this.quantity;
 

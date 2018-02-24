@@ -3,19 +3,19 @@ const Item = require('./Item.js');
 
 function Customer() {
   this.cart = []; // array of objects
-  this.totalCost = 0; // currency is usd
+  this.totalCost = 0.00;
 }
 
 Customer.prototype.calcCost = function() {
-  this.cart.forEach(function(element) {
-    this.totalCost += element.price;
+  this.totalCost = 0.00; // reset to zero before calculating total.
+  this.cart.forEach((element) => {
+    this.totalCost += element.totalItemCost;
   });
 }
 
 Customer.prototype.addToCart = function(itemID, itemQuantity) {
   var query = 'SELECT item_id, product_name, price, stock_quantity FROM Products WHERE item_id = ?';
-  var cart = this.cart;
-  connection.query(query, itemID, function(err, res) {
+  connection.query(query, itemID, (err, res) => {
     var itemInfo = res[0];
 
     var item = new Item(
@@ -27,11 +27,14 @@ Customer.prototype.addToCart = function(itemID, itemQuantity) {
 
     item.checkAvailability();
     if (item.isAvailable) {
+      this.cart.push(item);
       item.updateDatabase();
-      cart.push(item);
+      this.calcCost();
+      console.log(`Your total is: $${this.totalCost}`);
     } else {
       console.log('Insufficient quantity');
     }
   });
 }
+
 module.exports = Customer;
