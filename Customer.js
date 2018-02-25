@@ -12,35 +12,27 @@ Customer.prototype.calcCost = function() {
   });
 }
 
-Customer.prototype.addToCart = function(itemID, itemQuantity) {
-  var query = 'SELECT item_id, product_name, price, stock_quantity FROM Products WHERE item_id = ?';
-  connection.query(query, itemID, (err, res) => {
+Customer.prototype.addToCart = function(itemID, itemQuantity, price) {
 
-    var itemInfo = res[0];
-    var remStock = itemInfo.stock_quantity - itemQuantity;
+  // item to be pushed to cart
+  var item = {
+    id: itemID,
+    quantity: itemQuantity,
+    price: price
+  }
 
-    var item = {
-      id: itemID,
-      quantity: itemQuantity,
-      price: itemInfo.price
-    }
+  this.cart.push(item);
+  this.calcCost();
 
-    if (remStock > 0) {
+  console.log(`\n========Your total is: $${this.totalCost}========\n`);
 
-      this.cart.push(item);
-      this.calcCost();
-
-      console.log(`\n========Your total is: $${this.totalCost}========\n`);
-    } else {
-      console.log('Insufficient quantity');
-    }
-  });
 }
 
-Customer.prototype.updateDatabase = function(itemID, stockQuantity) {
+Customer.prototype.updateDatabase = function(itemID, itemQuantity) {
+
   var update = 'UPDATE Products SET stock_quantity = stock_quantity - ? WHERE item_id = ?';
-  var search = [stockQuantity, itemID];
+  var search = [itemQuantity, itemID];
   connection.query(update, search, function(err, res) {});
-}
+};
 
 module.exports = Customer;

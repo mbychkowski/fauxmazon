@@ -36,7 +36,7 @@ function storeInventory(loginType) {
     // switch depending if this is customer, manager, and supervisor
     switch (loginType) {
       case 'customer':
-        customerSearch();
+        customerSearch(res);
         break;
       case 'manager':
         managerSearch();
@@ -45,7 +45,7 @@ function storeInventory(loginType) {
   });
 }
 
-customerSearch = function() {
+customerSearch = function(res) {
 
   console.log('\n')
 
@@ -62,17 +62,33 @@ customerSearch = function() {
     type: 'confirm',
     message: 'Are you done shopping?'
   }]).then(function(answer) {
-    var itemBought = answer.buy;
+
+    var itemID = parseInt(answer.buy);
     var itemQuantity = answer.amount;
+    // var itemIndex = res.map(function(element) {
+    //   return element.item_id;
+    // }).indexOf(itemBought);
 
-    customer.updateDatabase(itemBought, itemQuantity);
-    customer.addToCart(itemBought, itemQuantity);
+    var query = 'SELECT item_id, product_name, price, stock_quantity FROM Products WHERE item_id = ?';
+    connection.query(query, itemID, function(err, res) {
 
-    if (answer.endConnection) {
-      connection.end();
-    } else {
-      storeInventory('customer');
-    }
+      var itemInfo = res[0];
+      var stockQuantity = itemInfo.stock_quantity;
+      var price = itemInfo.price;
+
+      if (stockQuantity - itemQuantity > 0) {
+        customer.updateDatabase(itemID, itemQuantity, stockQuantity);
+        customer.addToCart(itemID, itemQuantity, price);
+      } else {
+        console.log('Insufficient quantity');
+      }
+
+      if (answer.endConnection) {
+        connection.end();
+      } else {
+        storeInventory('customer');
+      }
+    });
   });
 }
 
