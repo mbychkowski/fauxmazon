@@ -65,13 +65,14 @@ customerSearch = function() {
     var itemBought = answer.buy;
     var itemQuantity = answer.amount;
 
+    customer.updateDatabase(itemBought, itemQuantity);
     customer.addToCart(itemBought, itemQuantity);
 
-    if (endConnection) {
+    if (answer.endConnection) {
       connection.end();
+    } else {
+      storeInventory('customer');
     }
-
-    storeInventory('customer');
   });
 }
 

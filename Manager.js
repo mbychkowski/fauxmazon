@@ -1,5 +1,4 @@
 const connection = require('./connection.js');
-const Item = require('./Item.js');
 
 function Manager() {
 

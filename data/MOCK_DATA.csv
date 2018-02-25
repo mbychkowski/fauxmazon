@@ -1,13 +1,13 @@
 item_id,product_name,department_name,price,stock_quantity
-77,Monster Hunter: World,Games,26.64,50
-96,Design Patterns: Elements of Reusable Object-Oriented Software,Books,24.29,82
-99,Sledge Hammer,Tools,47.30,5
-65,Monopoly,Games,39.14,96
-76,Classic Clean Hair Shampoo,Beauty,28.21,6
-65,Medium-Duty 8-Gauge 12' Booster Cables,Automotive,35.23,8
-50,Ultra Lite Mtn Tent,Outdoors,13.14,40
-57,Nike Hike Boots,Shoes,6.68,64
-75,Diapers,Baby,40.67,88
-63,Bananas,Grocery,1.96,35
-53,Lego Batman Batcave,Kids,31.79,24
-20,Deodorant & Antiperspirant,Beauty,16.64,63
+10,Monster Hunter: World,Games,26.64,50
+11,Design Patterns: Elements of Reusable Object-Oriented Software,Books,24.29,82
+12,Sledge Hammer,Tools,47.3,5
+13,Monopoly,Games,39.14,96
+14,Classic Clean Hair Shampoo,Beauty,28.21,6
+15,Medium-Duty 8-Gauge 12' Booster Cables,Automotive,35.23,8
+16,Ultra Lite Mtn Tent,Outdoors,13.14,40
+17,Nike Hike Boots,Shoes,6.68,64
+18,Diapers,Baby,40.67,88
+19,Bananas,Grocery,1.96,35
+20,Lego Batman Batcave,Kids,31.79,24
+21,Deodorant & Antiperspirant,Beauty,16.64,63
