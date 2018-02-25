@@ -30,7 +30,7 @@ Customer.prototype.addToCart = function(itemID, itemQuantity) {
       this.cart.push(item);
       item.updateDatabase();
       this.calcCost();
-      console.log(`Your total is: $${this.totalCost}`);
+      console.log(`\n========Your total is: $${this.totalCost}========\n`);
     } else {
       console.log('Insufficient quantity');
     }
