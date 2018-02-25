@@ -15,7 +15,7 @@ connection.connect(function(err) {
     type: 'list',
     name: 'loginAs',
     message: 'Login as a: ',
-    choices: ['customer', 'manager', 'supervisor']
+    choices: ['customer', 'manager']
   }]).then(function(answer) {
 
     loginType = answer.loginAs;
@@ -26,14 +26,12 @@ connection.connect(function(err) {
 });
 
 function storeInventory(loginType) {
-  var query = 'SELECT item_id, product_name, price FROM Products';
+  var query = 'SELECT item_id, product_name, department_name, price, stock_quantity FROM Products';
   connection.query(query, function(err, res) {
-    console.log('\n------------Welcome to Fauxmazon!------------\n');
 
-    console.log('id  product\n')
-    res.forEach(function(item) {
-      console.log(`${item.item_id}: ${item.product_name} ($${item.price})`);
-    });
+    console.log('\n------------Welcome to Fauxmazon!------------\n');
+    console.table(res);
+    console.log('\n')
 
     // switch depending if this is customer, manager, and supervisor
     switch (loginType) {
@@ -59,11 +57,19 @@ customerSearch = function() {
     name: 'amount',
     type: 'input',
     message: 'How many would you like?'
+  }, {
+    name: 'endConnection',
+    type: 'confirm',
+    message: 'Are you done shopping?'
   }]).then(function(answer) {
     var itemBought = answer.buy;
     var itemQuantity = answer.amount;
 
     customer.addToCart(itemBought, itemQuantity);
+
+    if (endConnection) {
+      connection.end();
+    }
 
     storeInventory('customer');
   });
@@ -77,10 +83,10 @@ managerSearch = function() {
     name: 'optionDo',
     type: 'list',
     message: 'What would you like to do?',
-    choices:
-    [
+    choices: [
       '[1] Add a product to Fauxmazon',
-      '[2] Increase stock of an existing item'
+      '[2] Increase stock of an existing item',
+      '[3] End manager session'
     ]
   }]).then(function(answer) {
 
@@ -103,7 +109,7 @@ managerSearch = function() {
         manager.addProduct(itemID, productName, deptName, price, stockQuantity);
         storeInventory('manager');
       });
-    } else {
+    } else if (managerOpt === '2') {
       inquirer.prompt([{
         name: 'addIventory',
         type: 'input',
@@ -117,6 +123,8 @@ managerSearch = function() {
         manager.addToInventory(itemID, stockQuantity);
         storeInventory('manager');
       });
+    } else {
+      connection.end();
     }
   });
 }
