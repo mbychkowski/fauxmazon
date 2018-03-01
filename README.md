@@ -1,11 +1,11 @@
 # Fauxmazon
-Fauxmazon is a node app that operates on the command line. It attempts to simulate a very basic, bare bones e-commerce concept.
+Fauxmazon is a node app that operates using CLI. It attempts to simulate a very basic, bare bones e-commerce concept.
 
 ## How to Use
 User can interface with application either as a `customer` or `manager`.
 
 ### Customer
-Customer has the option to purchase as many products as they want as lone as it is in stock. Otherwise the customer will be prompt with `Insufficient quantity` for item.
+Customer has the option to purchase as many products as they want as long as it is in stock. Otherwise the customer will be prompt with `Insufficient quantity` for item.
 <!-- GIF here -->
 ![Customer GIF Example](https://github.com/mbychkowski/fauxmazon/blob/master/docs/customer-example.gif)
 
